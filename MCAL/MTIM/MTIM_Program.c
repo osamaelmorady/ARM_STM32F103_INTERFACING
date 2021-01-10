@@ -248,6 +248,7 @@ static u32 TIM_Interval[10] = {} ;
 /***************************************************************************/
 ErrorState	MTIM_EnuSingleInterval(MTIM_Typedef * TIMx_Num ,  u32 Copy_U32Period_US , void (* Copy_PFun)(void) )
 {
+	ErrorState error = ES_NOK ;
 
 	/* Initialize AutoReload */
 	TIMx_Num -> ARR  =  Copy_U32Period_US ;
@@ -257,19 +258,43 @@ ErrorState	MTIM_EnuSingleInterval(MTIM_Typedef * TIMx_Num ,  u32 Copy_U32Period_
 		TIM_CallBackFun[1] = Copy_PFun  ;
 
 		TIM_Interval[1] = TIM_INTERVAL_SINGLE ;
+
+		error = ES_OK ;
 	}
-	if (TIMx_Num == MTIM1)
+	else if (TIMx_Num == MTIM2)
 	{
-		TIM_CallBackFun[1] = Copy_PFun  ;
+		TIM_CallBackFun[2] = Copy_PFun  ;
 
-		TIM_Interval[1] = TIM_INTERVAL_SINGLE ;
+		TIM_Interval[2] = TIM_INTERVAL_SINGLE ;
+
+		error = ES_OK ;
+
+	}
+    else if (TIMx_Num == MTIM3)
+    {
+		TIM_CallBackFun[3] = Copy_PFun  ;
+
+		TIM_Interval[3] = TIM_INTERVAL_SINGLE ;
+
+		error = ES_OK ;
+
+	}
+	else if (TIMx_Num == MTIM4)
+	{
+		TIM_CallBackFun[4] = Copy_PFun  ;
+
+		TIM_Interval[4] = TIM_INTERVAL_SINGLE ;
+
+		error = ES_OK ;
+
+    }
+	else
+	{
+		error = ES_OUT_RANGE ;
+
 	}
 
-
-
-
-
-	return ES_OK ;
+	return error ;
 }
 
 
@@ -282,20 +307,53 @@ ErrorState	MTIM_EnuSingleInterval(MTIM_Typedef * TIMx_Num ,  u32 Copy_U32Period_
 /***************************************************************************/
 ErrorState	MTIM_EnuPeriodicInterval(MTIM_Typedef * TIMx_Num ,  u32 Copy_U32Period_US , void (* Copy_PFun)(void) )
 {
+	ErrorState error = ES_NOK ;
 
 	/* Initialize AutoReload */
 	TIMx_Num -> ARR  =  Copy_U32Period_US ;
 
 
-	if (TIMx_Num == MTIM1)
-		{
-			TIM_CallBackFun[1] = Copy_PFun  ;
+    if (TIMx_Num == MTIM1)
+	{
+		TIM_CallBackFun[1] = Copy_PFun  ;
 
-			TIM_Interval[1] = TIM_INTERVAL_CONTINOUS ;
-		}
+		TIM_Interval[1] = TIM_INTERVAL_CONTINOUS ;
 
+		error = ES_OK ;
+	}
+	else if (TIMx_Num == MTIM2)
+	{
+		TIM_CallBackFun[2] = Copy_PFun  ;
 
-	return ES_OK ;
+		TIM_Interval[2] = TIM_INTERVAL_CONTINOUS ;
+
+		error = ES_OK ;
+
+	}
+	else if (TIMx_Num == MTIM3)
+	{
+		TIM_CallBackFun[3] = Copy_PFun  ;
+
+		TIM_Interval[3] = TIM_INTERVAL_CONTINOUS ;
+
+		error = ES_OK ;
+
+	}
+	else if (TIMx_Num == MTIM4)
+	{
+		TIM_CallBackFun[4] = Copy_PFun  ;
+
+		TIM_Interval[4] = TIM_INTERVAL_CONTINOUS ;
+
+		error = ES_OK ;
+
+	   }
+	else
+	{
+		error = ES_OUT_RANGE ;
+	}
+
+	return error ;
 }
 
 
@@ -322,7 +380,6 @@ void TIM1_UP_IRQHandler()
 	}
 
 	TIM_CallBackFun[1]() ;
-
 
 }
 
